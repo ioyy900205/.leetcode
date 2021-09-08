@@ -23,7 +23,23 @@ from imports import *
 # @lc code=start
 class Solution:
     def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:
+        target, m = divmod(sum(nums), k)
+        if m: return False
+        dp, n = [0]*k, len(nums)
+        nums.sort(reverse=True)
+        i = 0
+        if nums[0] > target: return False
+
+
+        while i<=len(nums)-1 and nums[i]==target:
+            i += 1
+            k -= 1
         
+        return partition(nums[k+1:], )
+
+
+
+        return True
         pass
 # @lc code=end
 

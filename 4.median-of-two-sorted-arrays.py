@@ -21,30 +21,54 @@ from imports import *
 # @lc rank=
 
 # @lc code=start
+
+
 class Solution:
-    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
-        i,j = 0,0
-        lenth = len(nums1) + len(nums2)
-        count = 0
-        output = []
-        while i+j <= lenth // 2:
-            if i < len(nums1) and j < len(nums2):
-                if nums1[i] > nums2[j]:
-                    output.append(nums2[j])
-                    j += 1
-                else:
-                    output.append(nums1[i])
-                    i += 1  
-            elif j<len(nums2):
-                output.append(nums2[j])
-                j += 1
+    def findMedianSortedArrays(self, A, B):
+        lenth_1, lenth_2 = len(A), len(B)
+        if lenth_1 == lenth_2 == 0: return
+
+        if lenth_1 > lenth_2:
+            A, B = B, A
+            lenth_1, lenth_2 = len(A), len(B)
+        
+        half = (lenth_1 + lenth_2 + 1) // 2
+        even = True if (lenth_1 + lenth_2)%2 == 0 else False
+
+        start, end = 0, lenth_1
+        apart = bpart = 0
+        
+        while start <= end:
+            apart = (start+end) // 2
+            bpart = half - apart
+            if apart>start and A[apart-1] > B[bpart]:
+                end = apart - 1
+            elif apart<end and A[apart] < B[bpart-1]:
+                start = apart + 1
             else:
-                output.append(nums1[i])
-                i += 1 
-        if lenth % 2 == 1:                          
-            return output[-1]        
-        else:
-            return ((output[-1]+output[-2]) / 2)
+                leftmax = 0
+                if apart == 0:
+                    leftmax = B[bpart-1]
+                elif bpart == 0:
+                    leftmax = A[apart-1]
+                else:
+                    leftmax = max(A[apart-1],B[bpart-1])
+                
+                if not even:
+                    return leftmax
+
+                rightmin = 0
+                if apart == lenth_1:
+                    rightmin = B[bpart]
+                elif bpart == lenth_2:
+                    rightmin = A[apart]
+                else:
+                    rightmin = min(A[apart], B[bpart])
+                return (leftmax + rightmin) / 2
+                
+                
+        
+   
         
 # @lc code=end
 
@@ -65,7 +89,7 @@ if __name__ == '__main__':
     print('Exception :')
     print('2.50000')
     print('Output :')
-    print(str(Solution().findMedianSortedArrays([1,2],[3,4])))
+    print(str(Solution().findMedianSortedArrays([1,2,3,4,5],[3,4,5,6,7,8])))
     print()
     
     print('Example 3:')
