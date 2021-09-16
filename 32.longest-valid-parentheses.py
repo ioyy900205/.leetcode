@@ -23,8 +23,23 @@ from imports import *
 # @lc code=start
 class Solution:
     def longestValidParentheses(self, s: str) -> int:
+        dp = [0 for x in range(len(s))]
+        max_to_now = 0
+        # dp records the longestvalidparenthese
+        for i in range(1,len(s)):
+            if s[i] == ')':
+                if s[i-1] == '(':
+                    dp[i] = dp[i-2] + 2
+                elif i-dp[i-1]-1 >= 0 and s[i-dp[i-1]-1] == '(':
+                    dp[i] = dp[i-1] + 2 + dp[i-dp[i-1]-2]
+                else:
+                    dp[i] = 0
+                max_to_now = max(max_to_now,dp[i])
+        return max_to_now
+            
+
+                        
         
-        pass
 # @lc code=end
 
 # @lc main=start
@@ -35,7 +50,7 @@ if __name__ == '__main__':
     print('Exception :')
     print('2')
     print('Output :')
-    print(str(Solution().longestValidParentheses("(()")))
+    print(str(Solution().longestValidParentheses("(()())")))
     print()
     
     print('Example 2:')
