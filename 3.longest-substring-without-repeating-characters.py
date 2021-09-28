@@ -9,6 +9,7 @@
 # @lc imports=start
 
 from imports import *
+
 # @lc imports=end
 
 # @lc idea=start
@@ -24,19 +25,20 @@ from imports import *
 # @lc code=start
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        find_table = {}
-        i = 0
-        lenth = 0
-    
-        for j, char in enumerate(s):
-            if char in find_table and i <= find_table[char]:
-                i = find_table[char] + 1
-            else:
-                lenth = max(lenth, j - i + 1)
-            find_table[char] = j
 
-                
-        return lenth
+        lenth = len(s)
+        i = 0
+        table = {}
+        result = 0
+
+        for j, char in enumerate(s):
+            if char in table and i <= table[char]:
+                i = table[char] + 1
+            else:                
+                result = max(result, j-i+1)
+            table[char] = j
+
+        return result
         
 # @lc code=end
 
@@ -48,7 +50,7 @@ if __name__ == '__main__':
     print('Exception :')
     print('3')
     print('Output :')
-    print(str(Solution().lengthOfLongestSubstring("tmmzuxt")))
+    print(str(Solution().lengthOfLongestSubstring("bbtablud")))
     print()
     
     print('Example 2:')

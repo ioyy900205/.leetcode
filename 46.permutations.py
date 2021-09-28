@@ -8,6 +8,7 @@
 
 # @lc imports=start
 from imports import *
+
 # @lc imports=end
 
 # @lc idea=start
@@ -20,6 +21,9 @@ from imports import *
 
 # @lc rank=
 
+global cnt
+cnt = 0
+
 # @lc code=start
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
@@ -28,8 +32,11 @@ class Solution:
         return result
 
     def dfs(self, nums, path, result: List[int]):
+        global cnt
+        cnt += 1
         if not nums:
             result.append(path)
+            return
         for i in range(len(nums)):
             self.dfs(nums[:i]+nums[i+1:], path+[nums[i]], result)
 
@@ -49,6 +56,7 @@ if __name__ == '__main__':
     print('Output :')
     print(str(Solution().permute([1,2,3])))
     print()
+    print(cnt)
     
     print('Example 2:')
     print('Input : ')
@@ -67,6 +75,6 @@ if __name__ == '__main__':
     print('Output :')
     print(str(Solution().permute([1])))
     print()
-    
+
     pass
 # @lc main=end

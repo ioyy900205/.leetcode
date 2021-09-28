@@ -25,6 +25,10 @@ class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         
         pass
+
+    def calculate(self, candidates, target):
+        
+        pass
 # @lc code=end
 
 # @lc main=start
